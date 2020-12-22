@@ -7,13 +7,14 @@ import java.time.LocalDate;
  * @author Vladimir Mann
  */
 @Entity
-@Table(name="employee")
+@Table(name = "employee")
 public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
-    @Column(name = "department_id")
+    @Column(name = "department_id" , insertable = false, updatable = false)
     private Integer departmentId;
     @Column(name = "name")
     private String name;
@@ -24,12 +25,15 @@ public class Employee {
     @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
     @Column(name = "salary")
-    private Integer salary;
+    private Long salary;
+    @ManyToOne
+    @JoinColumn(foreignKey = @ForeignKey(name = "departmentId"))
+    private Department department;
 
     public Employee() {
     }
 
-    public Employee(Integer departmentId, String name, String secondName, String patronymicName, LocalDate dateOfBirth, Integer salary) {
+    public Employee(Integer departmentId, String name, String secondName, String patronymicName, LocalDate dateOfBirth, Long salary) {
         this.departmentId = departmentId;
         this.name = name;
         this.secondName = secondName;
@@ -87,7 +91,7 @@ public class Employee {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public Integer getSalary() {
+    public Long getSalary() {
         return salary;
     }
 
@@ -104,7 +108,7 @@ public class Employee {
                 '}';
     }
 
-    public void setSalary(Integer salary) {
+    public void setSalary(Long salary) {
         this.salary = salary;
     }
 }
