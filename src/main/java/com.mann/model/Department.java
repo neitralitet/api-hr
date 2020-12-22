@@ -18,6 +18,7 @@ public class Department {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", updatable = false)
     private Integer id;
 
 
@@ -26,8 +27,6 @@ public class Department {
 
     @OneToMany(fetch = FetchType.EAGER ,mappedBy="department", cascade = REMOVE )
     private Set<Employee> employee;
-
-
 
 
     public Integer getId() {
